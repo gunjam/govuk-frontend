@@ -5,6 +5,10 @@
 
 @include govuk-exports("govuk/component/accordion") {
 
+  $govuk-accordion-link-colour: govuk-colour("blue");
+  $govuk-accordion-link-hover-colour: govuk-colour("light-blue");
+  $govuk-accordion-border-width: 3px;
+
   .govuk-accordion {
     @include govuk-responsive-margin(6, "bottom");
   }
@@ -15,6 +19,7 @@
   }
 
   .govuk-accordion__section-header {
+    padding-top: govuk-spacing(3);
     padding-bottom: govuk-spacing(3);
   }
 
@@ -52,14 +57,15 @@
     // Borders between accordion sections
     .govuk-accordion__section {
       padding-top: 0;
-      border-top: 1px solid $govuk-border-colour;
     }
 
     // Hide the body of collapsed sections
     .govuk-accordion__section-content {
       display: none;
       @include govuk-responsive-padding(3, "top");
+      @include govuk-responsive-padding(3, "right");
       @include govuk-responsive-padding(3, "bottom");
+      @include govuk-responsive-padding(0, "left");
     }
 
     // Show the body of expanded sections
@@ -70,64 +76,108 @@
     // This is styled to look like a link not a button
     .govuk-accordion__open-all {
       @include govuk-font($size: 16);
-      @include govuk-link-common;
+      box-sizing: border-box;
       display: inline;
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      margin-right: 5px;
+      padding: 0;
       border-width: 0;
       color: $govuk-link-colour;
       background: none;
       cursor: pointer;
 
-      &:focus {
-        background: none;
-      }
+      @include govuk-link-common;
+      @include govuk-link-style-default;
     }
 
     // Section headers have a pointer cursor as an additional affordance
     .govuk-accordion__section-header {
       position: relative;
+      @include govuk-responsive-padding(0, "left");
       // Safe area on the right to avoid clashing with icon
       padding-right: 40px;
+      border-top: 1px solid $govuk-border-colour;
+      color: $govuk-accordion-link-colour;
       cursor: pointer;
+    }
+
+    .govuk-accordion__section--expanded .govuk-accordion__section-header,
+    .govuk-accordion__section-header:hover {
+      border-top-color: currentColor;
+      box-shadow: inset 0 $govuk-accordion-border-width 0 0 currentColor;
     }
 
     // Section headers have a grey background on hover as an additional affodance
     .govuk-accordion__section-header:hover {
-      background-color: govuk-colour("light-grey", $legacy: "grey-4");
+      color: $govuk-accordion-link-hover-colour;
+    }
 
-      // For devices that can't hover such as touch devices,
-      // remove hover state as it can be stuck in that state (iOS).
-      @media (hover: none) {
-        background-color: initial;
+    .govuk-accordion__section-header:hover .govuk-accordion__section-button {
+      text-decoration: underline;
+    }
+
+    // For devices that can't hover such as touch devices,
+    // remove hover state as it can be stuck in that state (iOS).
+    @media (hover: none) {
+      .govuk-accordion__section-header:hover {
+        color: $govuk-link-colour;
       }
+
+      .govuk-accordion__section-header:hover .govuk-accordion__section-button {
+        text-decoration: none;
+      }
+    }
+
+    // Section headers have a grey background on hover as an additional affodance
+    .govuk-accordion__section-header:active {
+      background-color: govuk-colour("light-grey", $legacy: "grey-4");
     }
 
     // Setting focus styles on header so that summary that is not part of the button is included in focus
     .govuk-accordion__section-header--focused {
       // These replicate @mixin govuk-focusable (the mixin can't be used as the header doesn't get the focus)
-      outline: $govuk-focus-width solid $govuk-focus-colour;
+      outline: $govuk-focus-width solid transparent;
       outline-offset: 0;
+    }
+
+    .govuk-accordion__section:not(.govuk-accordion__section--expanded) .govuk-accordion__section-header--focused:not(:active) .govuk-accordion__section-button {
+      @include govuk-focusable-text;
+    }
+
+    .govuk-accordion__section--expanded .govuk-accordion__section-header--focused {
+      border-top-color: $govuk-focus-colour;
+      color: $govuk-text-colour;
+      // sass-lint:disable indentation
+      box-shadow: inset 0 $govuk-accordion-border-width 0 0 $govuk-focus-colour,
+                  inset 0 ($govuk-accordion-border-width + $govuk-focus-width) 0 0 $govuk-text-colour;
+      // sass-lint:enable indentation
+    }
+
+    .govuk-accordion__section--expanded .govuk-accordion__section-header--focused .govuk-accordion__section-button {
+      text-decoration: none;
     }
 
     // Buttons within the headers don’t need default styling
     .govuk-accordion__section-button {
-      @include govuk-link-common;
-      width: 100%;
+      @include govuk-typography-common;
       margin-top: 0;
       margin-bottom: 0;
       margin-left: 0;
-      padding-top: govuk-spacing(3);
-      padding-bottom: 0;
-      padding-left: 0;
+      padding: 0;
       border-width: 0;
       // Headings in section headers have link colours as an additional affodance
-      color: $govuk-link-colour;
+      color: inherit;
       background: none;
       text-align: left;
       cursor: pointer;
 
-      &:focus {
-        outline: none;
-        background: none;
+      @include govuk-not-ie8 {
+        &:focus {
+          outline: none;
+          background: none;
+        }
       }
     }
 
