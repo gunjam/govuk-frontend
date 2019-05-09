@@ -94,6 +94,14 @@
 
   ([PR #1288](https://github.com/alphagov/govuk-frontend/pull/1288))
 
+- Change spacing of tabs component headings which changes component height.
+
+  The tabs headings spacing has changed slightly on on mobile and when Javascript is disabled. This change makes them more consistent with the on-page navigation in the GOV.UK Design System.
+
+  To migrate: In the unlikely event that your app relies on the spacing of the tab headings being a certain height on mobile and with JS disabled, you should make the necessary adjustments in your code.
+
+  ([PR #1330](https://github.com/alphagov/govuk-frontend/pull/1330))
+
 - Pull Request Title goes here
 
   Description goes here (optional)
