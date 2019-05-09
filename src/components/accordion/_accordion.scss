@@ -125,7 +125,9 @@
     }
 
     .govuk-accordion__section--expanded .govuk-accordion__section-header--focused {
-      border-top-color: $govuk-focus-colour;
+      @include govuk-not-ie8 {
+        border-top-color: $govuk-focus-colour;
+      }
       outline: $govuk-focus-width solid transparent;
       outline-offset: 0;
       color: $govuk-text-colour;
@@ -154,6 +156,13 @@
         &:focus {
           outline: none;
           background: none;
+        }
+      }
+
+      @include govuk-if-ie8 {
+        &:focus {
+          color: $govuk-text-colour;
+          background: $govuk-focus-colour;
         }
       }
 
