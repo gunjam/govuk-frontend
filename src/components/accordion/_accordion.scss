@@ -63,9 +63,7 @@
     .govuk-accordion__section-content {
       display: none;
       @include govuk-responsive-padding(3, "top");
-      @include govuk-responsive-padding(3, "right");
       @include govuk-responsive-padding(3, "bottom");
-      @include govuk-responsive-padding(0, "left");
     }
 
     // Show the body of expanded sections
@@ -76,8 +74,6 @@
     // This is styled to look like a link not a button
     .govuk-accordion__open-all {
       @include govuk-font($size: 16);
-      box-sizing: border-box;
-      display: inline;
       position: relative;
       z-index: 1;
       margin: 0;
@@ -95,7 +91,6 @@
     // Section headers have a pointer cursor as an additional affordance
     .govuk-accordion__section-header {
       position: relative;
-      @include govuk-responsive-padding(0, "left");
       // Safe area on the right to avoid clashing with icon
       padding-right: 40px;
       border-top: 1px solid $govuk-border-colour;
@@ -103,36 +98,23 @@
       cursor: pointer;
     }
 
-    .govuk-accordion__section--expanded .govuk-accordion__section-header,
-    .govuk-accordion__section-header:hover {
-      border-top-color: currentColor;
-      box-shadow: inset 0 $govuk-accordion-border-width 0 0 currentColor;
+    .govuk-accordion__section--expanded .govuk-accordion__section-header {
+      border-top-color: $govuk-accordion-link-colour;
+      box-shadow: inset 0 $govuk-accordion-border-width 0 0 $govuk-accordion-link-colour;
     }
 
-    // Section headers have a grey background on hover as an additional affodance
     .govuk-accordion__section-header:hover {
-      color: $govuk-accordion-link-hover-colour;
-    }
-
-    .govuk-accordion__section-header:hover .govuk-accordion__section-button {
-      text-decoration: underline;
+      border-top-color: $govuk-accordion-link-hover-colour;
+      box-shadow: inset 0 $govuk-accordion-border-width 0 0 $govuk-accordion-link-hover-colour;
     }
 
     // For devices that can't hover such as touch devices,
     // remove hover state as it can be stuck in that state (iOS).
     @media (hover: none) {
       .govuk-accordion__section-header:hover {
-        color: $govuk-link-colour;
+        border-top-color: $govuk-accordion-link-colour;
+        box-shadow: inset 0 $govuk-accordion-border-width 0 0 $govuk-accordion-link-colour;
       }
-
-      .govuk-accordion__section-header:hover .govuk-accordion__section-button {
-        text-decoration: none;
-      }
-    }
-
-    // Section headers have a grey background on hover as an additional affodance
-    .govuk-accordion__section-header:active {
-      background-color: govuk-colour("light-grey", $legacy: "grey-4");
     }
 
     // Setting focus styles on header so that summary that is not part of the button is included in focus
@@ -142,10 +124,6 @@
       outline-offset: 0;
     }
 
-    .govuk-accordion__section:not(.govuk-accordion__section--expanded) .govuk-accordion__section-header--focused:not(:active) .govuk-accordion__section-button {
-      @include govuk-focusable-text;
-    }
-
     .govuk-accordion__section--expanded .govuk-accordion__section-header--focused {
       border-top-color: $govuk-focus-colour;
       color: $govuk-text-colour;
@@ -153,10 +131,6 @@
       box-shadow: inset 0 $govuk-accordion-border-width 0 0 $govuk-focus-colour,
                   inset 0 ($govuk-accordion-border-width + $govuk-focus-width) 0 0 $govuk-text-colour;
       // sass-lint:enable indentation
-    }
-
-    .govuk-accordion__section--expanded .govuk-accordion__section-header--focused .govuk-accordion__section-button {
-      text-decoration: none;
     }
 
     // Buttons within the headers don’t need default styling
@@ -189,6 +163,22 @@
       right: 0;
       bottom: 0;
       left: 0;
+    }
+
+    .govuk-accordion__section-button:hover:not(:focus) {
+      text-decoration: underline;
+    }
+
+    // For devices that can't hover such as touch devices,
+    // remove hover state as it can be stuck in that state (iOS).
+    @media (hover: none) {
+      .govuk-accordion__section-button:hover {
+        text-decoration: none;
+      }
+    }
+
+    .govuk-accordion__section:not(.govuk-accordion__section--expanded) .govuk-accordion__section-button:focus:not(:active) {
+      @include govuk-focusable-text;
     }
 
     .govuk-accordion__controls {
