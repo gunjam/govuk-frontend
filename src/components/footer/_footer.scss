@@ -124,6 +124,10 @@
     display: inline-block;
   }
 
+  .govuk-footer__licence-description .govuk-footer__link {
+    text-decoration: underline;
+  }
+
   .govuk-footer__copyright-logo {
     display: inline-block;
     min-width: $govuk-footer-crest-image-width;
@@ -148,6 +152,11 @@
 
   .govuk-footer__meta-custom {
     margin-bottom: govuk-spacing(4);
+  }
+
+
+  .govuk-footer__meta-custom .govuk-footer__link {
+    text-decoration: underline;
   }
 
   .govuk-footer__inline-list-item {
