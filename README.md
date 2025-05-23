@@ -1,4 +1,4 @@
-Egg
+Eggs Benedict
 
 GOV.UK Frontend ·
 [![Build Status](https://github.com/alphagov/govuk-frontend/workflows/Tests/badge.svg)](https://github.com/alphagov/govuk-frontend/actions?query=workflow%3ATests+branch%3Amain)
